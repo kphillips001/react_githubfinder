@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
+import Search from './components/users/Search';
 import axios from 'axios';
 
 import './App.css';
@@ -40,6 +41,7 @@ class App extends Component {
         <Navbar title='Github Finder' icon='fab fa-github' />
         <div container='container'>
           {/*Now that we have the users in state, we want to pass them down into the Users component through props. */}
+          <Search />
           <Users loading={this.state.loading} users={this.state.users} />
         </div>
       </div>
