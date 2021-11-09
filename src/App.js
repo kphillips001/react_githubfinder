@@ -22,7 +22,11 @@ class App extends Component {
 
     // Axios deals with promises with .then (will get a response)
     // Create a variable res to await the request
-    const res = await axios.get('https://api.github.com/users');
+    // Add api keys from env variables
+    const res = await axios.get(
+      `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET} `
+    );
+
     // .then((res) => console.log(res.data));
     // will use async/await instead of .then
 
