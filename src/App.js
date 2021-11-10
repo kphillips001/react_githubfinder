@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import Search from './components/users/Search';
+import Alert from './components/layout/Alert';
 import axios from 'axios';
 
 import './App.css';
@@ -13,6 +14,7 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
+    alert: null,
   };
 
   // lifecycle method
@@ -54,15 +56,22 @@ class App extends Component {
     this.setState({ users: [], loading: false });
   };
 
+  // Method for Alert, Puts alert into the state
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } });
+    // give it a timer for alert to disappear
+    setTimeout(() => this.setState({ alert: null }), 2000);
+  };
+
   render() {
     // desctruture
-
     const { users, loading } = this.state;
 
     return (
       <div className='App'>
         <Navbar title='Github Finder' icon='fab fa-github' />
         <div container='container'>
+          <Alert alert={this.state.alert} />
           {/*Now that we have the users in state, we want to pass them down into the Users component through props. */}
           {/*Add searchUsers as a prop from Search.js - instead of sending a prop down, we're sending a prop up. KNOWN AS PROPDRILLING*/}
           {/*Set searchUsers to a method within this app component*/}
@@ -70,6 +79,7 @@ class App extends Component {
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0 ? true : false}
+            setAlert={this.setAlert}
           />
           <Users loading={loading} users={users} />
         </div>

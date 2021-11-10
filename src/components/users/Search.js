@@ -13,6 +13,7 @@ class Search extends Component {
     searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
     showClear: PropTypes.bool.isRequired,
+    setAlert: PropTypes.func.isRequired,
   };
 
   // OnChange handler - arrow function that takes in event parameter
@@ -26,6 +27,13 @@ class Search extends Component {
   // If we don't use an arrow function, we have to specifically bind "this" by adding this.onSubmit.bind.this
   onSubmit = (e) => {
     e.preventDefault();
+
+    if (this.state.text === '') {
+      this.props.setAlert('Please enter something', 'light');
+    } else {
+      this.props.searchUsers(this.state.text);
+      this.setState({ text: '' });
+    }
 
     // Need to pass this.state.text up to pass up to the main app component through props
     this.props.searchUsers(this.state.text);
