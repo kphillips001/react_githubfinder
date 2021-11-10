@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Search extends Component {
   // Create empty state object and set for value to this.state.text
@@ -6,6 +7,10 @@ class Search extends Component {
   // State is only relevant to the component itself. No need for app level state.
   state = {
     text: '',
+  };
+
+  static propTypes = {
+    searchUsers: PropTypes.func.isRequired,
   };
 
   // OnChange handler - arrow function that takes in event parameter
@@ -19,8 +24,12 @@ class Search extends Component {
   // If we don't use an arrow function, we have to specifically bind "this" by adding this.onSubmit.bind.this
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.text);
-  }
+
+    // Need to pass this.state.text up to pass up to the main app component through props
+    this.props.searchUsers(this.state.text);
+    // then clear state
+    this.setState({ text: '' });
+  };
 
   render() {
     return (
