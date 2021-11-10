@@ -11,6 +11,8 @@ class Search extends Component {
 
   static propTypes = {
     searchUsers: PropTypes.func.isRequired,
+    clearUsers: PropTypes.func.isRequired,
+    showClear: PropTypes.bool.isRequired,
   };
 
   // OnChange handler - arrow function that takes in event parameter
@@ -32,6 +34,9 @@ class Search extends Component {
   };
 
   render() {
+    // destructure => now can remove this.props on each
+    const { showClear, clearUsers } = this.props;
+
     return (
       <div>
         <form onSubmit={this.onSubmit} className='form'>
@@ -48,6 +53,13 @@ class Search extends Component {
             className='btn btn-dark btn-block'
           />
         </form>
+        {/* Add button to clear search. Onclick will call a prop method. Sending the prop upwards. Will need to catch in App.js just like did for searchUsers*/}
+        {/* Show clear disappears once cleared because there's no users*/}
+        {showClear && (
+          <button className='btn btn-light btn-block' onClick={clearUsers}>
+            Clear
+          </button>
+        )}
       </div>
     );
   }

@@ -39,7 +39,7 @@ class App extends Component {
 
   // Search Github Users
   searchUsers = async (text) => {
-    this.setState({ loading: true })
+    this.setState({ loading: true });
 
     // Make a call to the github endpoint (use async/await)
     const res = await axios.get(
@@ -49,7 +49,16 @@ class App extends Component {
     this.setState({ users: res.data.items, loading: false });
   };
 
+  // Method for Clear Users from state
+  clearUsers = () => {
+    this.setState({ users: [], loading: false });
+  };
+
   render() {
+    // desctruture
+
+    const { users, loading } = this.state;
+
     return (
       <div className='App'>
         <Navbar title='Github Finder' icon='fab fa-github' />
@@ -57,8 +66,12 @@ class App extends Component {
           {/*Now that we have the users in state, we want to pass them down into the Users component through props. */}
           {/*Add searchUsers as a prop from Search.js - instead of sending a prop down, we're sending a prop up. KNOWN AS PROPDRILLING*/}
           {/*Set searchUsers to a method within this app component*/}
-          <Search searchUsers={this.searchUsers} />
-          <Users loading={this.state.loading} users={this.state.users} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+          />
+          <Users loading={loading} users={users} />
         </div>
       </div>
     );
